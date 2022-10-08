@@ -1,0 +1,21 @@
+{
+  "name": "nodebasic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinjeKim/nodebasic.git"
+  },
+  "keywords": [],
+  "author": "MinjeKim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MinjeKim/nodebasic/issues"
+  },
+  "homepage": "https://github.com/MinjeKim/nodebasic#readme"
+}
