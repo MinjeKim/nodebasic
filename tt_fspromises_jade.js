@@ -40,4 +40,45 @@ try {
   });
 
   rm(kingFld, {recursive:true, force:true});
+  
+  // 4. 앞 2)번의 폴더 트리를 async/await을 사용하지 말고, then을 사용하여 리팩하시오.
+  const result = {};
+  const printResult = (obj, depth) => {
+    for (const k of Object.keys(obj)) {
+      console.log('>'.repeat(depth), k);
+      printResult(obj[k], depth + 1);
+    }
+  };
+
+  let pendingCnt = 0;
+
+  const ls2 = (fld, obj) => { // 현재 폴더, 자식 obj
+    const bname = basename(fld);
+    obj[bname] = {};
+    readdir(fld, {withFileTypes: true}).then(files => {
+      for (const file of files ) {
+        if (
+            !file.isDirectory() || 
+            file.name.startsWith('.') || 
+            file === 'node_modules'
+          ) {
+          continue;
+        }
+
+        pendingCnt += 1;
+        ls2(join(fld, file.name), obj[bname]);
+      }
+    })
+    .catch(err => console.error(err)) 
+    .finally(() => {
+      pendingCnt -= 1;
+      if (pendingCnt < 0) {
+        // console.log('result :>> ', JSON.stringify(result, null, '  '));
+        printResult(result, 0);
+      }
+    });
+  }
+  
+  ls2(curr, result);
+
 } catch ( error ) {}
